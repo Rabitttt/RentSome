@@ -2,8 +2,8 @@ from django import forms
 
 class RegisterForm(forms.Form):
     username = forms.CharField(max_length=50,label='Kullanıcı Adı')
-    password = forms.CharField(max_length=20,label="Parola")
-    confirm = forms.CharField(max_length=20,label="Parolayı Onayla")
+    password = forms.CharField(widget=forms.PasswordInput,max_length=20,label="Parola")
+    confirm = forms.CharField(widget=forms.PasswordInput,max_length=20,label="Parolayı Onayla")
 
     def clean(self):
         username = self.cleaned_data.get("username")
@@ -18,3 +18,18 @@ class RegisterForm(forms.Form):
             "password" : password
         }
         return values
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label="Kullanıcı Adı")
+    password = forms.CharField(widget=forms.PasswordInput,label="Parola")
+
+
+
+
+
+
+
+
+
+

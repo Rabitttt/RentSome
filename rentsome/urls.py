@@ -20,7 +20,7 @@ from django.urls import include
 from user import views
 
 urlpatterns = [
-    path('',views.MainPage,name = 'Main Page'),
+    path('',views.MainPage,name = 'MainPage'),
     path('admin/', admin.site.urls),
     path('user/',include("user.urls")),
 ]

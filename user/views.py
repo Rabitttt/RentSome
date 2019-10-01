@@ -1,6 +1,8 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render , redirect
-from .form import RegisterForm
+from .form import RegisterForm , LoginForm
 from .models import User
+from django.contrib.auth import login
 # Create your views here.
 
 
@@ -9,14 +11,30 @@ def MainPage(request):
 
 
 def Login(request):
+    form = LoginForm(request.POST or None)
 
+    context = {
+        "form":form
+    }
 
-    return render(request,"login.html")
+    if form.is_valid():
+        username = form.cleaned_data.get("username")
+        password = form.cleaned_data.get("password")
+
+        user = authenticate(username = username,password = password)
+
+        if user is None:
+            return render(request,"login.html",context)
+
+        login(request,user)
+        return redirect("MainPage")
+
+    return render(request,"login.html",context)
 
 def Register(request):
     form = RegisterForm(request.POST or None)
     if form.is_valid():
-        username = form.cleaned_data.get("usernmae")
+        username = form.cleaned_data.get("username")
         password = form.cleaned_data.get("password")
 
         newUser = User(username = username)
