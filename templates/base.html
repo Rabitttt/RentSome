@@ -10,9 +10,7 @@
 </head>
 <body>
 
-      <p>HELLO MTRFCKR</p>
-
-        <div style = "margin-top : 100px; margin-bottom:100px;" class = "container">
+        <div style = "margin-bottom:100px;" class = "container">
 
             {% if messages %}
 
@@ -32,6 +30,8 @@
 
 
             {% block body %}
+
+            {% include "navbar/navbar.html" %}
 
             {% endblock body %}
 

@@ -1,9 +1,12 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,logout
 from django.shortcuts import render , redirect
 from .form import RegisterForm , LoginForm
 from .models import User
 from django.contrib.auth import login
+from django.contrib import messages
 # Create your views here.
+from rentsome import urls
+
 
 
 def MainPage(request):
@@ -24,6 +27,7 @@ def Login(request):
         user = authenticate(username = username,password = password)
 
         if user is None:
+            messages.info(request , "Kullanıcı Adı Veya Parola Hatalı...")
             return render(request,"login.html",context)
 
         login(request,user)
@@ -41,11 +45,15 @@ def Register(request):
         newUser.set_password(password)
 
         newUser.save()
-
+        messages.success(request,"Başarıyla Giriş Yaptınız...")
         return redirect("MainPage")
-
     context = {
         "form" : form
     }
 
     return render(request,"register.html",context)
+
+def Logout(request):
+    logout(request)
+    messages.success(request,"Başarıyla Çıkış Yaptınız...")
+    return redirect("login")
