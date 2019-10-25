@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+    <h4>Ürünler</h4>
+    {% for products in product %}
+    <p>
+
+        <a href="/user/detail/{{products.owner.id}}">
+            owner = {{products.owner}}
+        </a> <br>
+
+        <a href="/product/detail/{{products.id}}">
+            {{products.name}}
+        </a> <br>
+
+        id : {{ products.id }} <br>
+        price : {{products.price}} $<br>
+        <hr>
+    </p>
+    {% endfor %}
+
+
+
+
+{% endblock body %}

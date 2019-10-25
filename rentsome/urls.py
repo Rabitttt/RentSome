@@ -18,9 +18,11 @@ from django.urls import path
 from django.urls import include
 
 from user import views
+from product import views
 
 urlpatterns = [
-    path('',views.MainPage,name = 'MainPage'),
+    path('',views.List,name = 'MainPage'),
     path('admin/', admin.site.urls),
     path('user/',include("user.urls")),
+    path('product/',include("product.urls"))
 ]

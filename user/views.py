@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate,logout
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect,get_object_or_404
 from .form import RegisterForm , LoginForm
 from .models import User
 from django.contrib.auth import login
@@ -31,6 +31,7 @@ def Login(request):
             return render(request,"login.html",context)
 
         login(request,user)
+        messages.success(request , "Başarıyla Giriş Yaptınız...")
         return redirect("MainPage")
 
     return render(request,"login.html",context)
@@ -45,15 +46,21 @@ def Register(request):
         newUser.set_password(password)
 
         newUser.save()
-        messages.success(request,"Başarıyla Giriş Yaptınız...")
+        messages.success(request , "Başarıyla Hespa Oluşturdunuz...")
         return redirect("MainPage")
     context = {
         "form" : form
     }
-
     return render(request,"register.html",context)
 
 def Logout(request):
     logout(request)
     messages.success(request,"Başarıyla Çıkış Yaptınız...")
-    return redirect("login")
+    return redirect("MainPage")
+
+def Detail(request,id):
+    user = get_object_or_404(User,id=id)
+    context = {
+        "user" : user,
+    }
+    return render(request,"user_detail.html",context)

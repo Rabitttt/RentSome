@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+
+    {% for products in product %}
+    <p>
+        owner = {{products.owner}} <br>
+            {{products.name}}<br>
+
+        id : {{ products.id }} <br>
+        price : {{products.price}} $<br>
+        <hr>
+    </p>
+    {% endfor %}
+
+{% endblock body %}
