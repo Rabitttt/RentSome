@@ -7,11 +7,15 @@
 
     {% for products in product %}
     <p>
-        owner = {{products.owner}} <br>
-            {{products.name}}<br>
+        {% if products.product_image %}
+      <img class="img-fluid rounded" src="{{products.product_image.url}}" alt="">
+        {% endif %}
 
-        id : {{ products.id }} <br>
-        price : {{products.price}} $<br>
+        Sahibi : {{products.owner}} <br>
+        Ürün Adı : {{products.name}}<br>
+
+        Açıklama : {{products.description}}<br>
+        fiyat : {{products.price}} $<br>
         <hr>
     </p>
     {% endfor %}

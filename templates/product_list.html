@@ -8,6 +8,10 @@
     {% for products in product %}
     <p>
 
+        {% if products.product_image %}
+      <img class="img-fluid rounded" src="{{products.product_image.url}}" alt="">
+        {% endif %}
+
         <a href="/user/detail/{{products.owner.id}}">
             owner = {{products.owner}}
         </a> <br>
@@ -18,11 +22,17 @@
 
         id : {{ products.id }} <br>
         price : {{products.price}} $<br>
-        <hr>
+
+        {% if products.is_available%}
+            <form action="{% url 'product:rent' products.id %}" method="Post">
+                {% csrf_token %}
+                <button type="submit" name="id" value="{{products.id}}">Rent!</button>
+            </form>
+        {% else %}
+            hirer = {{products.hirer}}
+        {% endif %}
+<hr>
     </p>
     {% endfor %}
-
-
-
 
 {% endblock body %}

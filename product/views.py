@@ -5,6 +5,7 @@ from .models import ProductModel
 from user.models import User
 from .form import RentForm
 
+
 def List(request):
     product = ProductModel.objects.all()
     return render(request,"product_list.html",{"product":product})
@@ -25,15 +26,14 @@ def my_products(request,id):
     return render(request,"my_product.html",context)
 
 def rent_items(request):
-    form = RentForm(request.POST or None)
+    form = RentForm(request.POST or None,request.FILES or None)
     context = {
         "form" : form,
     }
     if form.is_valid():
-        name = form.cleaned_data.get("name")
-        price = form.cleaned_data.get("price")
+        item = form.save(commit = False)
 
-        item = ProductModel(name = name ,price = price,owner = request.user)
+        item.owner = request.user
 
         item.save()
 
@@ -42,3 +42,13 @@ def rent_items(request):
     return render(request,"rent_item.html",context)
 
 
+def rental(request,id):
+    item = ProductModel.objects.get(id = id)
+    if request.user.money >= item.price:
+        request.user.money =request.user.money - item.price
+        item.is_available = False
+        item.hirer = request.user
+        item.save()
+        return redirect("MainPage")
+    messages.info(request,"Hesabınızda Yeterli Para Bulunmamaktadır...")
+    return redirect("MainPage")

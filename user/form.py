@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import ModelForm
+from .models import User
 
 class RegisterForm(forms.Form):
     username = forms.CharField(max_length=50,label='Kullanıcı Adı')
@@ -24,12 +26,16 @@ class LoginForm(forms.Form):
     username = forms.CharField(label="Kullanıcı Adı")
     password = forms.CharField(widget=forms.PasswordInput,label="Parola")
 
-
-
-
-
-
-
-
-
-
+class UpdateForm(ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'password',
+            'first_name',
+            'last_name',
+            'email',
+            'location',
+            'profile_picture',
+            'money',
+        ]
