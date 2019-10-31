@@ -16,3 +16,12 @@ class ProductModel(models.Model):
     def __str__(self):
         return self.name
 
+
+
+#comment kısmı yazılacak
+#kiralık tarihleri ayarlanacak
+#ürünlerim kısmı detaylandırılacak (kiradakı , kiralanmayı bekleyen , kiraladıklarım)
+#defult user degerleri atanacak
+#profil güncelleme kısmında kısmı yapılacak
+#kategoriler ve arama kısmı eklenecek
+#butun projeye bootstrap eklenecek

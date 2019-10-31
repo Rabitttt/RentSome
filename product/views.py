@@ -45,7 +45,7 @@ def rent_items(request):
 def rental(request,id):
     item = ProductModel.objects.get(id = id)
     if request.user.money >= item.price:
-        request.user.money =request.user.money - item.price
+        request.user.money -= item.price
         item.is_available = False
         item.hirer = request.user
         item.save()

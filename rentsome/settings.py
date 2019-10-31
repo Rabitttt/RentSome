@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'product',
     'django_cleanup',
-    'Comment',
+    'comment',
 ]
 
 MIDDLEWARE = [
