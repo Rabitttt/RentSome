@@ -1,6 +1,16 @@
-from django.shortcuts import render
-
+from django.shortcuts import render , get_object_or_404 , redirect,reverse
+from django.contrib import messages
 # Create your views here.
+from .models import Comment
+from .form import CommentForm
+from product.models import ProductModel
 
-def ProductComment(request):
+def ProductComment(request,id):
+    product = get_object_or_404(ProductModel,id=id)
+    newComment = Comment(sender = request.user , reciever = product)
+    newComment.comment = request.POST.get("comment")
+    newComment.save()
+    return redirect(reverse("product:detail",kwargs={"id":id}))
+
+def NestedComment(request,id):
     pass

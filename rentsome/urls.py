@@ -26,7 +26,8 @@ urlpatterns = [
     path('',views.List,name = 'MainPage'),
     path('admin/', admin.site.urls),
     path('user/',include("user.urls")),
-    path('product/',include("product.urls"))
+    path('product/',include("product.urls")),
+    path('comment/',include("comment.urls")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

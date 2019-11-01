@@ -4,10 +4,12 @@ from product.models import ProductModel
 # Create your models here.
 
 class Comment(models.Model):
-    sender = models.ForeignKey(User,on_delete= models.SET_NULL,null=True)
+    comment = models.CharField(max_length=300 , verbose_name="Yorum")
+    sender = models.ForeignKey(User,on_delete= models.SET_NULL,null=True,related_name="user")
     reciever = models.ForeignKey(ProductModel,on_delete=models.CASCADE,related_name="product")
-    comment = models.TextField(verbose_name="Yorum")
 
+    def __str__(self):
+        return self.sender
 
 class NestedComment(Comment):
     nested = models.ForeignKey(Comment,on_delete=models.DO_NOTHING,related_name="yorum")

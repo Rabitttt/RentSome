@@ -1,29 +1,64 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% load crispy_forms_tags %}
 
 {% block body %}
 
+    <link rel="stylesheet" href="{% static 'CSS:comment.css' %}">
 
-    {% for products in product %}
     <p>
-        {% if products.product_image %}
-      <img class="img-fluid rounded" src="{{products.product_image.url}}" alt="">
+
+        {% if product.product_image %}
+      <img class="img-fluid rounded" src="{{product.product_image.url}}" alt="">
         {% endif %}
 
-        Sahibi : {{products.owner}} <br>
-        Ürün Adı : {{products.name}}<br>
+        Sahibi : {{product.owner}} <br>
+        Ürün Adı : {{product.name}}<br>
 
-        Açıklama : {{products.description}}<br>
-        fiyat : {{products.price}} $<br>
+        Açıklama : {{product.description}}<br>
+        fiyat : {{product.price}} $<br>
         <hr>
     </p>
-    {% endfor %}
 
 
-    <div class="form-group">
-        <label for="comment">Comment:</label>
-        <textarea class="form-control" rows="5" id="comment"></textarea>
-    </div>
+    <h3>Yorumlar</h3> <hr>
+
+{% if comment_list %}
+    {% for comment in comment_list  %}
+        <div class="media mb-4">
+          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+          <div class="media-body">
+            <h5 class="mt-0">{{comment.sender}}</h5>
+            {{comment.comment}}
+          </div>
+        </div>
+      {% endfor %}
+
+
+      {% else %}
+      <div class ="alert alert-primary">
+        Bu makaleye herhangi bir yorum yazılmamış,ilk yorum yapan siz olun!
+      </div>
+      {% endif %}
+
+      <div class="card my-4">
+          <h5 class="card-header">Yorum Ekle:</h5>
+          <div class="card-body">
+            <form method = "post" action = "{% url 'comment:comments' product.id %}">
+              {% csrf_token %}
+              <div class="form-group">
+                  <label >Yorum</label>
+                <textarea name = "comment" class="form-control" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Ekle</button>
+            </form>
+          </div>
+        </div>
+        </div>
+
+      </div>
+
 
 {% endblock body %}

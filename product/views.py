@@ -11,11 +11,13 @@ def List(request):
     return render(request,"product_list.html",{"product":product})
 
 def detail(request,id):
-    product = ProductModel.objects.filter(id = id)
+    product = ProductModel.objects.get(id = id)
+    comment_list = product.product.all()
     context = {
-        "product" : product,
+        "product" : product ,
+        "comment_list" : comment_list ,
     }
-    return render(request,"product_detail.html",context)
+    return render(request , "product_detail.html" , context)
 
 def my_products(request,id):
     user = get_object_or_404(User,id=id)
