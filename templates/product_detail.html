@@ -8,20 +8,29 @@
 
     <link rel="stylesheet" href="{% static 'CSS:comment.css' %}">
 
-    <p>
 
+<div class="container">
+  <!-- Page Heading -->
+    <h3 class="my-4">{{product.name}} Detay
+  </h3>
+        <div class="col-lg-6 mb-4">
+      <div class="card h-100">
         {% if product.product_image %}
-      <img class="img-fluid rounded" src="{{product.product_image.url}}" alt="">
-        {% endif %}
-
-        Sahibi : {{product.owner}} <br>
-        Ürün Adı : {{product.name}}<br>
-
-        Açıklama : {{product.description}}<br>
-        fiyat : {{product.price}} $<br>
-        <hr>
-    </p>
-
+          <img  class="img-fluid rounded" src="{{product.product_image.url}}" alt="">
+        {% else %}
+          <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+          {% endif %}
+        <div class="card-body">
+          <h4 class="card-title">
+              {{product.name}}
+          </h4>
+            <p class="card-text"> {{product.description}}</p>
+            <p class="card-date" > {{product.create_date}} </p>
+            <p class="card-text">{{product.owner}}</p>
+        </div>
+      </div>
+    </div>
+</div>
 
     <h3>Yorumlar</h3> <hr>
 
@@ -30,8 +39,10 @@
         <div class="media mb-4">
           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
           <div class="media-body">
-            <h5 class="mt-0">{{comment.sender}}</h5>
-            {{comment.comment}}
+              <h5 class="mt-0">{{comment.sender}}</h5>
+              {{comment.comment}} <br>
+              {{comment.date}}
+
           </div>
         </div>
       {% endfor %}

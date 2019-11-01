@@ -4,16 +4,57 @@
 
 {% block body %}
 
-
-    {% for products in product %}
+<h3>Kiradaki Ürünler</h3>
+{% if wait_hire %}
+    {% for products in hired %}
     <p>
         owner = {{products.owner}} <br>
             {{products.name}}<br>
 
         description : {{products.description}} <br>
         fiyat : {{products.price}} $<br>
+        kiralayan : {{products.hirer}}
+<hr>
+</p>
+{% endfor %}
+{% else %}
+<p>Kirada Ürününüz Bulunmamaktadir</p>
+{% endif %}
+
+<hr>
+
+<h3>Kiralanmayi Bekleyen Ürünler</h3>
+{% if wait_hire %}
+        {% for products in wait_hire %}
+            <p>
+            owner = {{products.owner}} <br>
+            {{products.name}}<br>
+
+        description : {{products.description}} <br>
+        fiyat : {{products.price}} $<br>
+        {% endfor %}
+    <hr>
+{% else %}
+<p>Kiralanmayı Bekleyen Ürününüz Bulunmamaktadır...</p>
+{% endif %}
+
+
+<hr>
+
+<h3>Kiraladiginiz Ürünler</h3>
+{% if hired_from_me %}
+    {% for products in hired_from_me %}
+    <p>
+        owner = {{products.owner}} <br>
+            {{products.name}}<br>
+
+        description : {{products.description}} <br>
+        fiyat : {{products.price}} $<br>
+        kiralayan : {{products.hirer}}
         <hr>
 </p>
 {% endfor %}
-
+{% else %}
+    <p>Kiraladiginiz Ürün Bulunmamaktadir</p>
+{% endif %}
 {% endblock body %}

@@ -9,8 +9,9 @@ class ProductModel(models.Model):
     product_image = models.ImageField(blank=True,null=True,verbose_name="Ürün Resmi Ekleyin")
     owner = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="product",related_name="owner")
     is_available = models.BooleanField(default=True)
-    #hire_date = models.DateTimeField(verbose_name='Kiralama Tarihii' , auto_now_add=True)
-    #hire_end_date = models.TimeField(verbose_name="Kiralık Bitiş Tarihi")
+    create_date = models.DateTimeField(auto_now_add=True,null=True)
+    hire_date = models.DateField(auto_now=True,null=True)
+    hire_end_date = models.DateTimeField(verbose_name="Kiralık Bitiş Tarihi",null=True,auto_now_add=True)
     hirer = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
@@ -18,10 +19,10 @@ class ProductModel(models.Model):
 
 
 
-#comment kısmı yazılacak
-#kiralık tarihleri ayarlanacak
-#ürünlerim kısmı detaylandırılacak (kiradakı , kiralanmayı bekleyen , kiraladıklarım)
+#comment kısmı yazılacak (comment kısmı yazıldı nested comment yazılacak)
+#kiralık tarihleri ayarlanacak (kira bitiş tarihi eklendi , en düşük değerin bugun olması sağlanacak.)
+#(oluşturuldu)---ürünlerim kısmı detaylandırılacak (kiradakı , kiralanmayı bekleyen , kiraladıklarım)
 #defult user degerleri atanacak
-#profil güncelleme kısmında kısmı yapılacak
-#kategoriler ve arama kısmı eklenecek
+#profil güncelleme kısmında parola kısmı yapılacak
+#kategoriler , arama , yorumları sıralama kısmı eklenecek
 #butun projeye bootstrap eklenecek

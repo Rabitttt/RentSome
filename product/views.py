@@ -3,12 +3,17 @@ from django.contrib import messages
 from .models import ProductModel
 # Create your views here.
 from user.models import User
-from .form import RentForm
+from .form import RentForm ,DateForm
 
 
 def List(request):
     product = ProductModel.objects.all()
-    return render(request,"product_list.html",{"product":product})
+    form = DateForm()
+    for products in product:
+        if products.hire_date == products.hire_end_date:
+            products.is_available = False
+            products.hire_end_date = None
+    return render(request,"product_list.html",{"product":product,"form":form})
 
 def detail(request,id):
     product = ProductModel.objects.get(id = id)
@@ -21,9 +26,13 @@ def detail(request,id):
 
 def my_products(request,id):
     user = get_object_or_404(User,id=id)
-    product = ProductModel.objects.filter(owner = user.id)
+    hired = ProductModel.objects.filter(owner = user.id , is_available = False)
+    wait_hire = ProductModel.objects.filter(owner = user.id , is_available = True)
+    hired_from_me = ProductModel.objects.filter(hirer = user.id)
     context = {
-        "product" : product,
+        "hired" : hired,
+        "wait_hire" : wait_hire,
+        "hired_from_me" : hired_from_me,
     }
     return render(request,"my_product.html",context)
 
@@ -46,11 +55,14 @@ def rent_items(request):
 
 def rental(request,id):
     item = ProductModel.objects.get(id = id)
-    if request.user.money >= item.price:
-        request.user.money -= item.price
-        item.is_available = False
-        item.hirer = request.user
-        item.save()
-        return redirect("MainPage")
-    messages.info(request,"Hesabınızda Yeterli Para Bulunmamaktadır...")
+    form = DateForm(request.POST or None)
+    if form.is_valid():
+        if request.user.money >= item.price:
+            request.user.money -= item.price
+            item.is_available = False
+            item.hire_end_date = request.POST.get("hire_end_date")
+            item.hirer = request.user
+            item.save()
+            return redirect("MainPage")
+        messages.info(request,"Hesabınızda Yeterli Para Bulunmamaktadır...")
     return redirect("MainPage")
