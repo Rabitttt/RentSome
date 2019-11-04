@@ -145,3 +145,28 @@
     </p>
     {% endfor %}
 
+
+
+
+<!-- /.paginator -->
+
+   <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if products.has_previous %}
+                            <a href="?page={{ products.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                        </span>
+
+                        {% if products.has_next %}
+                            <a href="?page={{ products.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+

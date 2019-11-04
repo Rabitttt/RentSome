@@ -6,8 +6,6 @@
 
 {% block body %}
 
-    <link rel="stylesheet" href="{% static 'CSS:comment.css' %}">
-
 
 <div class="container">
   <!-- Page Heading -->
@@ -24,9 +22,21 @@
           <h4 class="card-title">
               {{product.name}}
           </h4>
-            <p class="card-text"> {{product.description}}</p>
-            <p class="card-date" > {{product.create_date}} </p>
-            <p class="card-text">{{product.owner}}</p>
+            <p class="card-text"> Açıklama : {{product.description}}</p>
+            <p class="card-date" > Oluşturulma Tarihi : {{product.create_date}} </p>
+            <p class="card-text"> Sahibi : {{product.owner}}</p>
+
+            {% if product.is_available%}
+            <form action="{% url 'product:rent' product.id %}" method="Post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <button type="submit" name="id" value="{{products.id}}">Rent!</button>
+            </form>
+
+        {% else %}
+            Kiralık Bitiş Tarihi= {{product.hire_end_date}} <br>
+            Kiralayan = {{product.hirer}}
+        {% endif %}
         </div>
       </div>
     </div>

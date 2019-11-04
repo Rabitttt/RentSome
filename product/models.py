@@ -5,7 +5,7 @@ from user.models import User
 class ProductModel(models.Model):
     name = models.CharField(max_length=30,verbose_name="Ürün Adı",null=False)
     price = models.FloatField(verbose_name='Fiyat',default=0)
-    description = models.CharField(max_length=500,null=True,blank=True,verbose_name="Açıklama")
+    description = models.CharField(max_length=500,null=True,blank=True,verbose_name="Açıklama",default="'Belirtilmedi'")
     product_image = models.ImageField(blank=True,null=True,verbose_name="Ürün Resmi Ekleyin")
     owner = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="product",related_name="owner")
     is_available = models.BooleanField(default=True)
@@ -22,7 +22,9 @@ class ProductModel(models.Model):
 #comment kısmı yazılacak (comment kısmı yazıldı nested comment yazılacak)
 #kiralık tarihleri ayarlanacak (kira bitiş tarihi eklendi , en düşük değerin bugun olması sağlanacak.)
 #(oluşturuldu)---ürünlerim kısmı detaylandırılacak (kiradakı , kiralanmayı bekleyen , kiraladıklarım)
-#defult user degerleri atanacak
+#defult user degerleri atanacak ()
 #profil güncelleme kısmında parola kısmı yapılacak
 #kategoriler , arama , yorumları sıralama kısmı eklenecek
 #butun projeye bootstrap eklenecek
+#Kullanıcı girişi olmadan yorum yapma bugını duzelt
+#ürün Detay Sayfasında Puana gore Siralama - tarihe gore - daha once kiralayanlara göre sıralama

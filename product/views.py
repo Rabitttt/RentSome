@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render , get_object_or_404 , redirect
 from django.contrib import messages
 from .models import ProductModel
@@ -7,20 +8,35 @@ from .form import RentForm ,DateForm
 
 
 def List(request):
-    product = ProductModel.objects.all()
-    form = DateForm()
-    for products in product:
-        if products.hire_date == products.hire_end_date:
-            products.is_available = False
-            products.hire_end_date = None
-    return render(request,"product_list.html",{"product":product,"form":form})
+    product_list = ProductModel.objects.all()
+
+    page = request.GET.get('page' , 1)
+
+    paginator = Paginator(product_list ,6)
+
+    try :
+        products = paginator.page(page)
+    except PageNotAnInteger :
+        products = paginator.page(1)
+    except EmptyPage :
+        products = paginator.page(paginator.num_pages)
+
+    for product in products :
+        if product.hire_date == product.hire_end_date :
+            product.is_available = False
+            product.hire_end_date = None
+
+    return render(request,"product_list.html",{"products" : products})
+
 
 def detail(request,id):
+    form = DateForm()
     product = ProductModel.objects.get(id = id)
     comment_list = product.product.all()
     context = {
         "product" : product ,
         "comment_list" : comment_list ,
+        "form" : form,
     }
     return render(request , "product_detail.html" , context)
 
