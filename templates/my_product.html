@@ -5,18 +5,49 @@
 {% block body %}
 
 <h3>Kiradaki Ürünler</h3>
-{% if wait_hire %}
+{% if hired %}
     {% for products in hired %}
-    <p>
-        owner = {{products.owner}} <br>
-            {{products.name}}<br>
 
-        description : {{products.description}} <br>
-        fiyat : {{products.price}} $<br>
-        kiralayan : {{products.hirer}}
+<!-- Page Content -->
+    <!-- Page Content -->
+    <div class="container">
+      <!-- Page Heading -->
+      <h4 class="my-4"> <!-- {{product.name}} -->
+        <small></small>
+      </h4>
+      <!-- Project One -->
+      <div class="row">
+        <div class="col-md-7">
+          <a href="{% url 'product:detail' products.id %}">
+          {% if products.product_image %}
+          <img  class="img-fluid rounded" src="{{products.product_image.url}}" alt="">
+        {% else %}
+          <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+            {% endif %}
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h4 class="card-title">
+            <a href="{% url 'product:detail' products.id %}">{{product.name}}</a>
+          </h4>
+          <p class="card-text">
+
+        Sahibi : {{products.owner}} <br>
+        Ürün Adı : {{products.name}}<br>
+
+        Açıklama : {{products.description}} <br>
+        Fiyat : {{products.price}} $<br>
+        Kiralayan : {{products.hirer}}<br>
+              Kiralık Bitiş Tarihi= {{products.hire_end_date}} <br>
+            <a class="btn btn-danger" href="{% url 'product:detail' products.id %}">Kirada</a>
+        </div>
+      </div>
+    </div>
+      <!-- /.row -->
+      <hr>
+  {% endfor %}
+
 <hr>
-</p>
-{% endfor %}
 {% else %}
 <p>Kirada Ürününüz Bulunmamaktadir</p>
 {% endif %}
@@ -26,14 +57,47 @@
 <h3>Kiralanmayi Bekleyen Ürünler</h3>
 {% if wait_hire %}
         {% for products in wait_hire %}
-            <p>
-            owner = {{products.owner}} <br>
-            {{products.name}}<br>
 
-        description : {{products.description}} <br>
-        fiyat : {{products.price}} $<br>
-        {% endfor %}
+<!-- Page Content -->
+    <!-- Page Content -->
+    <div class="container">
+      <!-- Page Heading -->
+      <h4 class="my-4"> <!-- {{product.name}} -->
+        <small></small>
+      </h4>
+      <!-- Project One -->
+      <div class="row">
+        <div class="col-md-7">
+          <a href="{% url 'product:detail' products.id %}">
+          {% if products.product_image %}
+          <img  class="img-fluid rounded" src="{{products.product_image.url}}" alt="">
+        {% else %}
+          <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+            {% endif %}
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h4 class="card-title">
+            <a href="{% url 'product:detail' products.id %}">{{product.name}}</a>
+          </h4>
+          <p class="card-text">
+
+        Sahibi : {{products.owner}} <br>
+        Ürün Adı : {{products.name}}<br>
+        Eklenme Tarihi : {{products.create_date}}<br>
+        Açıklama : {{products.description}} <br>
+        Fiyat : {{products.price}} $<br>
     <hr>
+            <a class="btn btn-primary" href="{% url 'product:detail' products.id %}">Detay</a>
+        </div>
+      </div>
+    </div>
+      <!-- /.row -->
+    <hr>
+  {% endfor %}
+
+<hr>
+
 {% else %}
 <p>Kiralanmayı Bekleyen Ürününüz Bulunmamaktadır...</p>
 {% endif %}
@@ -44,16 +108,47 @@
 <h3>Kiraladiginiz Ürünler</h3>
 {% if hired_from_me %}
     {% for products in hired_from_me %}
-    <p>
-        owner = {{products.owner}} <br>
-            {{products.name}}<br>
 
-        description : {{products.description}} <br>
-        fiyat : {{products.price}} $<br>
-        kiralayan : {{products.hirer}}
-        <hr>
-</p>
+<!-- Page Content -->
+    <!-- Page Content -->
+    <div class="container">
+      <!-- Page Heading -->
+      <h4 class="my-4"> <!-- {{product.name}} -->
+        <small></small>
+      </h4>
+      <!-- Project One -->
+      <div class="row">
+        <div class="col-md-7">
+          <a href="{% url 'product:detail' products.id %}">
+          {% if products.product_image %}
+          <img  class="img-fluid rounded" src="{{products.product_image.url}}" alt="">
+        {% else %}
+          <img class="img-fluid rounded mb-3 mb-md-0" src="http://placehold.it/700x300" alt="">
+            {% endif %}
+          </a>
+        </div>
+        <div class="col-md-5">
+          <h4 class="card-title">
+            <a href="{% url 'product:detail' products.id %}">{{product.name}}</a>
+          </h4>
+          <p class="card-text">
+
+        Sahibi : {{products.owner}} <br>
+        Ürün Adı : {{products.name}}<br>
+
+        Açıklama : {{products.description}} <br>
+        Fiyat : {{products.price}} $<br>
+        Kiralayan : {{products.hirer}}<br>
+              Kiralık Bitiş Tarihi= {{products.hire_end_date}} <br>
+            <a class="btn btn-danger" href="{% url 'product:detail' products.id %}">Kirada</a>
+        </p>
+        </div>
+      </div>
+    </div>
+      <!-- /.row -->
+<hr>
 {% endfor %}
+<hr>
 {% else %}
     <p>Kiraladiginiz Ürün Bulunmamaktadir</p>
 {% endif %}

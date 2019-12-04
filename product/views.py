@@ -5,6 +5,8 @@ from .models import ProductModel
 # Create your views here.
 from user.models import User
 from .form import RentForm ,DateForm
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 
 def List(request):
@@ -40,6 +42,7 @@ def detail(request,id):
     }
     return render(request , "product_detail.html" , context)
 
+@login_required(login_url = "user:login")
 def my_products(request,id):
     user = get_object_or_404(User,id=id)
     hired = ProductModel.objects.filter(owner = user.id , is_available = False)
@@ -52,6 +55,8 @@ def my_products(request,id):
     }
     return render(request,"my_product.html",context)
 
+
+@login_required(login_url = "user:login")
 def rent_items(request):
     form = RentForm(request.POST or None,request.FILES or None)
     context = {
@@ -69,6 +74,7 @@ def rent_items(request):
     return render(request,"rent_item.html",context)
 
 
+@login_required(login_url = "user:login")
 def rental(request,id):
     item = ProductModel.objects.get(id = id)
     form = DateForm(request.POST or None)
@@ -76,7 +82,10 @@ def rental(request,id):
         if request.user.money >= item.price:
             request.user.money -= item.price
             item.is_available = False
-            item.hire_end_date = request.POST.get("hire_end_date")
+            if item.hire_end_date <= timezone.now():
+                item.hire_end_date = request.POST.get("hire_end_date")
+                messages.info(request , "Gecersiz Tarih")
+                return redirect("MainPage")
             item.hirer = request.user
             item.save()
             return redirect("MainPage")

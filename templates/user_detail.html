@@ -11,13 +11,12 @@
             <h3> Profil Resmi Bulunmamaktadır... </h3>
         {% endif %}
 
-    Kullanıcı Adı = {{user.username}}<br>
-    id = {{user.id}}<br>
-    Ad = {{user.first_name}}<br>
-    Soyad = {{user.last_name}}<br>
-    e-mail = {{user.email}}<br>
-    Konum = {{user.location}}<br>
-    Para = {{user.money}}<br>
+    Kullanıcı Adı : {{user.username}}<br>
+    Ad : {{user.first_name}}<br>
+    Soyad : {{user.last_name}}<br>
+    e-mail : {{user.email}}<br>
+    Konum : {{user.location}}<br>
+    Para : {{user.money}}<br>
 
 
     <td><a href="{% url 'user:update' request.user.id %}" class = "btn btn-danger">Güncelle</a></td>

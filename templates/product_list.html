@@ -31,8 +31,8 @@
             <a href="{% url 'product:detail' product.id %}">{{product.name}}</a>
           </h4>
           <p class="card-text">
-            id : {{ products.id }} <br>
             Açıklama : {{product.description}}</p>
+            Eklenme Tarihi : {{product.create_date}}</p>
             price : {{product.price}} $<br>
 
         {% if product.is_available%}
@@ -84,27 +84,4 @@
 
 </div>
 
-<!--
-{% if products.has_other_pages %}
-  <ul class="pagination">
-    {% if products.has_previous %}
-      <li><a href="?page={{ products.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in products.paginator.page_range %}
-      {% if products.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li><a href="?page={{ i }}">{{ i }}</a></li>
-      {% endif %}
-    {% endfor %}
-    {% if products.has_next %}
-      <li><a href="?page={{ products.next_page_number }}">&raquo;</a></li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}
--->
 {% endblock body %}

@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate,logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render , redirect,get_object_or_404,reverse
 from .form import RegisterForm , LoginForm , UpdateForm
@@ -38,6 +39,7 @@ def Login(request):
 
     return render(request,"login.html",context)
 
+
 def Register(request):
     form = RegisterForm(request.POST or None)
     if form.is_valid():
@@ -56,6 +58,7 @@ def Register(request):
     }
     return render(request,"register.html",context)
 
+@login_required(login_url = "user:login")
 def Logout(request):
     logout(request)
     messages.success(request,"Başarıyla Çıkış Yaptınız...")
@@ -63,11 +66,9 @@ def Logout(request):
 
 def Detail(request,id):
     user = get_object_or_404(User,id=id)
-    context = {
-        "user" : user,
-    }
-    return render(request,"user_detail.html",context)
+    return render(request,"user_detail.html",{"user": user,})
 
+@login_required(login_url = "user:login")
 def Update(request,id):
     update = get_object_or_404(User,id = request.user.id)
     update_form = UpdateForm(request.POST or None, request.FILES or None ,instance=update)
